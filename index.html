@@ -59,7 +59,9 @@
                 this.toDoList.push({
                     id: Math.ceil(Math.random()*10),
                     name: this.name
-                })
+                });
+                this.name = '';
+                this.isFormOpen = false;
             },
             deleteItem(toDo) {
                 this.toDoList.splice(toDo, 1)
