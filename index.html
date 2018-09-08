@@ -1,0 +1,71 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Vue.js Start</title>
+    <style>
+        #app {
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: #2c3e50;
+        margin-top: 60px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <h1>Vue.js training</h1>
+
+    <div id="app">
+        <div v-for="toDo in toDoList">
+            {{toDo.name}}
+            <button v-on:click="deleteItem(toDo)">X</button>
+        </div>
+        <div v-if="!isFormOpen">
+            <button v-on:click="toggleForm">Add new</button>
+        </div>
+        <div v-if="isFormOpen">
+            <input v-model="name" placeholder="Name">
+
+            <button v-on:click="save">Save</button>
+            <button v-on:click="toggleForm">Cancel</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+        el: '#app',
+        data: {
+            toDoList: [
+                {
+                    id: 0,
+                    name: 'Zakupy'
+                },
+                {
+                    id: 1,
+                    name: 'Posprzatac'
+                }
+            ],
+            isFormOpen: false,
+            name: ''
+        },
+        methods: {
+            toggleForm() {
+                this.isFormOpen = !this.isFormOpen;
+            },
+            save() {
+                this.toDoList.push({
+                    id: Math.ceil(Math.random()*10),
+                    name: this.name
+                })
+            },
+            deleteItem(toDo) {
+                this.toDoList.splice(toDo, 1)
+            }
+        }
+        })
+    </script>
+  </body>
+</html>
