@@ -1,7 +1,7 @@
 <template>
     <div class="toDo">
         Sort by Name
-        <button v-if="isAsceding" v-on:click="changeOrder(flase)"> - decending</button>
+        <button v-if="isAsceding" v-on:click="changeOrder(false)"> - decending</button>
         <button v-if="!isAsceding" v-on:click="changeOrder(true)"> - asceding</button>
     </div>
 </template>
@@ -13,7 +13,12 @@ export default {
     name: 'Sort',
     props: {
         items: {
-            type: Array
+            type: Array,
+            required: true
+        },
+        param: {
+            type: String,
+            required: true
         }
     },
     data() {
@@ -25,10 +30,15 @@ export default {
     methods: {
         changeOrder(changeValue) {
             this.isAsceding = changeValue;
+
+            this.items = this.items.sort(this.compare);
+
+            this.$emit('sorted-item', this.items);
         },
 
-        sort() {
-            // this.items
+        compare(a,b) {
+            var reverse = this.isAsceding ? -1 : 1;
+            return reverse * ((a[this.param] > b[this.param]) - (b[this.param] > a[this.param]));
         }
     }
 }

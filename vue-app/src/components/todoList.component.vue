@@ -1,6 +1,8 @@
 <template>
     <div>
-      <div class="sort" @sort-item="onSortItem($event)" :items="toDoList"></div>
+      <div class="sort">
+        <Sort @sorted-item="onSortItem($event)" :items="toDoList" :param="'name'"></Sort>
+      </div>
       <div class="toDoList">
         <ListItem class="toDo" v-for="toDo in toDoList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
         </ListItem>
@@ -19,12 +21,14 @@
 import uuid from 'uuid';
 import addNewItem from './addNewItem.component.vue'
 import ListItem from './listItem.component.vue'
+import Sort from './sort.component.vue'
 
 export default {
   name: 'todoList',
   components: {
     addNewItem,
-    ListItem
+    ListItem,
+    Sort
   },
   data() {
     return {
@@ -56,7 +60,7 @@ export default {
         this.toDoList.push(newItem);
       },
       onSortItem(sortedItem) {
-        this.toDoList = [...sortedItem]
+        this.toDoList = sortedItem;
       }
     }
 }
