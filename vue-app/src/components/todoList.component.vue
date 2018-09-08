@@ -8,10 +8,12 @@
             <button v-on:click="toggleForm">Add new</button>
         </div>
         <div v-if="isFormOpen">
-            <input v-model="name" placeholder="Name">
-
-            <button class="saveButton" v-on:click="save">Save</button>
-            <button v-on:click="toggleForm">Cancel</button>
+          <form @submit.prevent="onSubmit()">
+            <input name="itemName" v-validate="'required'" v-model="newItem.name">
+            <button type="submit" class="saveButton">Save</button>
+            <span class="error-msg" v-show="errors.has('itemName')">This field is required</span>
+          </form>
+          <button v-on:click="toggleForm">Cancel</button>
         </div>
     </div>
 </template>
@@ -34,24 +36,32 @@ export default {
         }
       ],
       isFormOpen: false,
-      name: ''
+      newItem: {
+        name: ''
+      }
     }
   },
   methods: {
       toggleForm() {
           this.isFormOpen = !this.isFormOpen;
       },
-      save() {
-          this.toDoList.push({
-              id: uuid(),
-              name: this.name
-          });
-          this.name = '';
-          this.isFormOpen = false;
-      },
+
       deleteItem(toDo) {
           this.toDoList.splice(toDo, 1)
-      }
+      },
+      onSubmit() {
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          return;
+        }
+        this.toDoList.push({
+            id: uuid(),
+            ...this.newItem
+          });
+          this.newItem.name = '';
+        this.$validator.reset();
+      });
+    }
   }
 }
 </script>
