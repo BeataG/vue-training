@@ -1,13 +1,15 @@
 <template>
     <div>
-        <div class="toDoList" v-for="toDo in toDoList" :key="toDo.id">
+      <div class="toDoList">
+        <div class="toDo" v-for="toDo in toDoList" :key="toDo.id">
             {{toDo.name}}
             <button class="deleteButton"  v-on:click="deleteItem(toDo)">X</button>
         </div>
+      </div>
         <div v-if="!isFormOpen">
             <button v-on:click="toggleForm">Add new</button>
         </div>
-        <div v-if="isFormOpen">
+        <div class="form" v-if="isFormOpen">
           <form @submit.prevent="onSubmit()">
             <input name="itemName" v-validate="'required'" v-model="newItem.name">
             <button type="submit" class="saveButton">Save</button>
@@ -83,6 +85,24 @@ export default {
 }
 
 .toDoList {
-  width: 250px;
+  width: 300px;
+  margin: auto;
+  padding: 15px;
+}
+
+.toDo {
+  width: 300px;
+  margin: 5px;
+}
+
+.error-msg {
+  font-size: 10px;
+  color: #e60000;
+  display: block;
+}
+
+.form {
+  width: 300px;
+  margin: auto;
 }
 </style>
