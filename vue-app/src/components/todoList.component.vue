@@ -1,10 +1,10 @@
 <template>
     <div>
       <div class="sort">
-        <Sort @sorted-item="onSortItem($event)" :items="toDoList" :param="'name'"></Sort>
+        <Sort @sorted-item="onSortItem($event)" :items="todoList" :param="'name'"></Sort>
       </div>
       <div class="toDoList">
-        <ListItem class="toDo" v-for="toDo in toDoList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
+        <ListItem class="toDo" v-for="toDo in sharedState.todoList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
         </ListItem>
       </div>
         <div v-if="!isFormOpen">
@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import uuid from 'uuid';
-import addNewItem from './addNewItem.component.vue'
-import ListItem from './listItem.component.vue'
-import Sort from './sort.component.vue'
+import addNewItem from './addNewItem.component.vue';
+import ListItem from './listItem.component.vue';
+import Sort from './sort.component.vue';
+import store from '../store';
 
 export default {
   name: 'todoList',
@@ -32,6 +32,7 @@ export default {
   },
   data() {
     return {
+      sharedState: store.state,
       toDoList: [
         {
             id: 1,

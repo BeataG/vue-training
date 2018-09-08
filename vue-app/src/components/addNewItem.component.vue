@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import uuid from 'uuid';
 
 export default {
     name: 'addNewItem',
@@ -27,7 +26,7 @@ export default {
                     return;
                 }
                 this.$emit('add-item', {
-                    id: uuid(),
+                    id: 'dakaodk',
                     ...this.newItem
                 });
 

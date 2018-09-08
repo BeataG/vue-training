@@ -1,7 +1,7 @@
 <template>
     <div class="toDo">
-        {{item.name}}
-        <button class="deleteButton"  v-on:click="deleteItem(item)">X</button>
+        {{item.title}}
+        <button class="deleteButton"  v-on:click="show(item)">X</button>
     </div>
 </template>
 
@@ -25,6 +25,9 @@ export default {
     methods: {
         deleteItem(item) {
             this.$emit('remove-item', item)
+        },
+        show(item) {
+            console.log(item);
         }
     }
 }
