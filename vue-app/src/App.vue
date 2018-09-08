@@ -8,12 +8,14 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import todoList from './components/todoList.component.vue'
+import addNewItem from './components/addNewItem.component.vue'
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    todoList
+    todoList,
+    addNewItem
   }
 }
 </script>

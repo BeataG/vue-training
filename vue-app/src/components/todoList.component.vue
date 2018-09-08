@@ -10,11 +10,7 @@
             <button v-on:click="toggleForm">Add new</button>
         </div>
         <div class="form" v-if="isFormOpen">
-          <form @submit.prevent="onSubmit()">
-            <input name="itemName" v-validate="'required'" v-model="newItem.name">
-            <button type="submit" class="saveButton">Save</button>
-            <span class="error-msg" v-show="errors.has('itemName')">This field is required</span>
-          </form>
+          <addNewItem @add-item="onAddItem($event)"></addNewItem>
           <button v-on:click="toggleForm">Cancel</button>
         </div>
     </div>
@@ -22,9 +18,13 @@
 
 <script>
 import uuid from 'uuid';
+import addNewItem from './addNewItem.component.vue'
 
 export default {
   name: 'todoList',
+  components: {
+    addNewItem
+  },
   data() {
     return {
       toDoList: [
@@ -51,20 +51,11 @@ export default {
       deleteItem(toDo) {
           this.toDoList.splice(toDo, 1)
       },
-      onSubmit() {
-      this.$validator.validateAll().then(result => {
-        if (!result) {
-          return;
-        }
-        this.toDoList.push({
-            id: uuid(),
-            ...this.newItem
-          });
-          this.newItem.name = '';
-        this.$validator.reset();
-      });
+      onAddItem(newItem) {
+        console.log(newItem);
+        this.toDoList.push(newItem);
+      }
     }
-  }
 }
 </script>
 
