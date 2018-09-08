@@ -1,7 +1,7 @@
 <template>
     <div>
         <form @submit.prevent="onSubmit()">
-            <input name="itemName" v-validate="'required'" v-model="newItem.name">
+            <input name="itemName" v-validate="'required'" v-model="newItem.title">
             <button type="submit" class="saveButton">Save</button>
             <span class="error-msg" v-show="errors.has('itemName')">This field is required</span>
         </form>
@@ -15,7 +15,7 @@ export default {
     data() {
         return {
             newItem: {
-                name: ''
+                title: ''
             }
         }
     },
@@ -26,7 +26,7 @@ export default {
                     return;
                 }
                 this.$emit('add-item', {
-                    id: 'dakaodk',
+                    id: Math.floor((Math.random() * 100) + 1),
                     ...this.newItem
                 });
 

@@ -1,13 +1,11 @@
 <template>
     <div class="toDo">
         {{item.title}}
-        <button class="deleteButton"  v-on:click="show(item)">X</button>
+        <button class="deleteButton"  v-on:click="deleteItem(item)">X</button>
     </div>
 </template>
 
 <script>
-import uuid from 'uuid';
-
 export default {
     name: 'ListItem',
     props: {
@@ -17,17 +15,12 @@ export default {
     },
     data() {
         return {
-            newItem: {
-                name: ''
-            }
+            
         }
     },
     methods: {
         deleteItem(item) {
             this.$emit('remove-item', item)
-        },
-        show(item) {
-            console.log(item);
         }
     }
 }

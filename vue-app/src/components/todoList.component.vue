@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="sort">
-        <Sort @sorted-item="onSortItem($event)" :items="todoList" :param="'name'"></Sort>
+        <Sort @sorted-item="onSortItem($event)" :items="sharedState.todoList" :param="'title'"></Sort>
       </div>
       <div class="toDoList">
         <ListItem class="toDo" v-for="toDo in sharedState.todoList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
@@ -33,16 +33,7 @@ export default {
   data() {
     return {
       sharedState: store.state,
-      toDoList: [
-        {
-            id: 1,
-            name: 'Zakupy'
-        },
-        {
-            id: 2,
-            name: 'Posprzatac'
-        }
-      ],
+      toDoList: [],
       isFormOpen: false,
       newItem: {
         name: ''
@@ -55,13 +46,13 @@ export default {
       },
 
       onRemoveItem(toDo) {
-          this.toDoList.splice(toDo, 1)
+          store.removeItem(toDo);
       },
       onAddItem(newItem) {
-        this.toDoList.push(newItem);
+        store.addItem(newItem);
       },
       onSortItem(sortedItem) {
-        this.toDoList = sortedItem;
+        this.sharedState.todoList = sortedItem;
       }
     }
 }
