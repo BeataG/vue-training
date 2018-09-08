@@ -1,17 +1,21 @@
 <template>
     <div>
+      <div>
+        Search
+        <input name="itemName" v-model="searchText" v-on:change="search">
+      </div>
       <div class="sort">
-        <Sort @sorted-item="onSortItem($event)" :items="sharedState.todoList" :param="'title'"></Sort>
+        <Sort @sorted-item="onSortItem($event)" :items="filtredList" :param="'title'"></Sort>
       </div>
       <div class="toDoList">
-        <ListItem class="toDo" v-for="toDo in sharedState.todoList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
+        <ListItem class="toDo" v-for="toDo in filtredList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
         </ListItem>
       </div>
         <div v-if="!isFormOpen">
             <button v-on:click="toggleForm">Add new</button>
         </div>
         <div class="form" v-if="isFormOpen">
-          <addNewItem @add-item="onAddItem($event)"></addNewItem>
+          <addNewItem></addNewItem>
           <button v-on:click="toggleForm">Cancel</button>
         </div>
     </div>
@@ -33,11 +37,9 @@ export default {
   data() {
     return {
       sharedState: store.state,
-      toDoList: [],
+      filtredList: store.state.todoList,
       isFormOpen: false,
-      newItem: {
-        name: ''
-      }
+      searchText: ''
     }
   },
   methods: {
@@ -48,11 +50,12 @@ export default {
       onRemoveItem(toDo) {
           store.removeItem(toDo);
       },
-      onAddItem(newItem) {
-        store.addItem(newItem);
-      },
+      
       onSortItem(sortedItem) {
         this.sharedState.todoList = sortedItem;
+      },
+      search() {
+        this.filtredList = this.sharedState.todoList.filter(x => x.title.includes(this.searchText));
       }
     }
 }

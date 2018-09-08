@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import store from '../store';
 
 export default {
     name: 'addNewItem',
@@ -25,10 +26,12 @@ export default {
                 if (!result) {
                     return;
                 }
-                this.$emit('add-item', {
+
+                store.addItem({
                     id: Math.floor((Math.random() * 100) + 1),
                     ...this.newItem
                 });
+
 
                 this.newItem.name = '';
                 this.$validator.reset();
