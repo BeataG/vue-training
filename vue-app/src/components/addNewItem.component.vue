@@ -41,5 +41,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.saveButton {
+  color: white;
+  background: #47d147;
+  border: 2px solid #29a329;
+}
 </style>

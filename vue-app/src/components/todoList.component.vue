@@ -1,10 +1,8 @@
 <template>
     <div>
       <div class="toDoList">
-        <div class="toDo" v-for="toDo in toDoList" :key="toDo.id">
-            {{toDo.name}}
-            <button class="deleteButton"  v-on:click="deleteItem(toDo)">X</button>
-        </div>
+        <ListItem class="toDo" v-for="toDo in toDoList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
+        </ListItem>
       </div>
         <div v-if="!isFormOpen">
             <button v-on:click="toggleForm">Add new</button>
@@ -19,11 +17,13 @@
 <script>
 import uuid from 'uuid';
 import addNewItem from './addNewItem.component.vue'
+import ListItem from './listItem.component.vue'
 
 export default {
   name: 'todoList',
   components: {
-    addNewItem
+    addNewItem,
+    ListItem
   },
   data() {
     return {
@@ -48,11 +48,10 @@ export default {
           this.isFormOpen = !this.isFormOpen;
       },
 
-      deleteItem(toDo) {
+      onRemoveItem(toDo) {
           this.toDoList.splice(toDo, 1)
       },
       onAddItem(newItem) {
-        console.log(newItem);
         this.toDoList.push(newItem);
       }
     }
@@ -61,29 +60,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.saveButton {
-  color: white;
-  background: #47d147;
-  border: 2px solid #29a329;
-}
-
-.deleteButton {
-  color: white;
-  background: #ff3333;
-  border: 2px solid #cc0000;
-  float: right;
-  border-radius: 3px;
-}
-
 .toDoList {
   width: 300px;
   margin: auto;
   padding: 15px;
-}
-
-.toDo {
-  width: 300px;
-  margin: 5px;
 }
 
 .error-msg {
