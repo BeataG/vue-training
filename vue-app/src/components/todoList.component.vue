@@ -1,5 +1,6 @@
 <template>
     <div>
+      <div class="sort" @sort-item="onSortItem($event)" :items="toDoList"></div>
       <div class="toDoList">
         <ListItem class="toDo" v-for="toDo in toDoList" :key="toDo.id" @remove-item="onRemoveItem($event)" :item="toDo">
         </ListItem>
@@ -53,6 +54,9 @@ export default {
       },
       onAddItem(newItem) {
         this.toDoList.push(newItem);
+      },
+      onSortItem(sortedItem) {
+        this.toDoList = [...sortedItem]
       }
     }
 }

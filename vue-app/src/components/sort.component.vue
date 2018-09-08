@@ -1,7 +1,8 @@
 <template>
     <div class="toDo">
-        {{item.name}}
-        <button class="deleteButton"  v-on:click="deleteItem(item)">X</button>
+        Sort by Name
+        <button v-if="isAsceding" v-on:click="changeOrder(flase)"> - decending</button>
+        <button v-if="!isAsceding" v-on:click="changeOrder(true)"> - asceding</button>
     </div>
 </template>
 
@@ -9,22 +10,25 @@
 import uuid from 'uuid';
 
 export default {
-    name: 'ListItem',
+    name: 'Sort',
     props: {
-        item: {
-            type: Object
+        items: {
+            type: Array
         }
     },
     data() {
         return {
-            newItem: {
-                name: ''
-            }
+            isAsceding: true,
+
         }
     },
     methods: {
-        deleteItem(item) {
-            this.$emit('remove-item', item)
+        changeOrder(changeValue) {
+            this.isAsceding = changeValue;
+        },
+
+        sort() {
+            // this.items
         }
     }
 }
